@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>India Energy Atlas | Grid Foundation Model</title>
+<style>
+@font-face{font-family:Fenix;src:url(assets/fonts/Fenix-Regular.ttf)}
+@font-face{font-family:Inter;font-weight:400;src:url(assets/fonts/Inter-Regular.ttf)}
+@font-face{font-family:Inter;font-weight:400;font-style:italic;src:url(assets/fonts/Inter-Italic.ttf)}
+@font-face{font-family:Inter;font-weight:600;src:url(assets/fonts/Inter-SemiBold.ttf)}
+@font-face{font-family:Inter;font-weight:700;src:url(assets/fonts/Inter-Bold.ttf)}
+:root{
+  --ox:#400005; --ox2:#5c0a10; --navy:#172D45; --ink:#17171A; --mute:#5A6472;
+  --cream:#F7F6F3; --paper:#FFFFFF; --line:#E3E0D9; --sand:#EFEBE2;
+  --saffron:#F59A33; --green:#0B6E3B;
+}
+@page{size:A4;margin:0}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:#d9d6cf}
+body{font-family:Inter,sans-serif;color:var(--ink);-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.page{width:210mm;height:297mm;background:var(--cream);position:relative;overflow:hidden;page-break-after:always;margin:0 auto}
+h1,h2,h3{font-family:Fenix,serif;font-weight:400;color:var(--navy)}
+.kicker{font-size:7.4pt;font-weight:700;letter-spacing:.16em;text-transform:uppercase}
+.pad{padding:0 13mm}
+
+/* header */
+.top{height:17mm;display:flex;align-items:center;justify-content:space-between;padding:0 13mm}
+.top img{height:9.5mm}
+.top .tag{font-size:7.6pt;color:var(--mute);letter-spacing:.04em}
+.top .tag b{color:var(--ox);font-weight:600}
+
+/* hero */
+.hero{background:linear-gradient(135deg,#2c0003 0%,var(--ox) 45%,#6a0d14 100%);color:#F7F1E8;padding:7mm 13mm 43mm;position:relative}
+.hero .kicker{color:var(--saffron)}
+.hero h1{color:#FBF7F0;font-size:37pt;line-height:1.04;margin:2.5mm 0 3.5mm;letter-spacing:-.01em}
+.hero h1 em{font-style:normal;color:#FFC98A}
+.hero p{font-size:11.2pt;line-height:1.5;max-width:150mm;color:#EBDDD3}
+.hero p b{color:#fff;font-weight:600}
+.chips{display:flex;gap:2.5mm;margin-top:4.5mm}
+.chip{border:.3mm solid rgba(255,255,255,.28);border-radius:20mm;padding:1.6mm 3.6mm;font-size:8.2pt;font-weight:600;color:#fff;display:flex;align-items:center;gap:1.8mm;background:rgba(255,255,255,.06)}
+.chip i{width:1.8mm;height:1.8mm;border-radius:50%;background:var(--saffron);display:block}
+.chip:nth-child(3) i{background:#45c486}
+
+/* browser frame */
+.frame{background:#fff;border-radius:2.2mm;box-shadow:0 3mm 9mm rgba(30,10,10,.28);overflow:hidden;border:.25mm solid #d8d3ca}
+.frame .bar{height:5mm;background:#F0EDE7;display:flex;align-items:center;gap:1.1mm;padding-left:2.4mm;border-bottom:.2mm solid #e0dcd3}
+.frame .bar s{width:1.6mm;height:1.6mm;border-radius:50%;background:#cfc9be;display:block}
+.frame .bar span{margin-left:3mm;font-size:5.6pt;color:#8a8478;background:#fff;border-radius:1mm;padding:.5mm 2.5mm}
+.frame img{display:block;width:100%}
+.heroShot{margin:-38mm 13mm 0;position:relative}
+.heroShot .crop{height:80mm;overflow:hidden}
+.heroShot .crop img{margin-top:-4mm}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);margin:5mm 13mm 0;border-top:.3mm solid var(--navy);border-bottom:.2mm solid var(--line)}
+.stat{padding:2.4mm 0 2.2mm 3.5mm;border-left:.2mm solid var(--line)}
+.stat:first-child{border-left:0;padding-left:0}
+.stat b{font-family:Fenix,serif;font-weight:400;font-size:21pt;color:var(--ox);display:block;line-height:1}
+.stat span{font-size:7.6pt;color:var(--mute);display:block;margin-top:1.2mm;line-height:1.3}
+
+/* flow */
+.flowT{margin:6mm 13mm 3mm;display:flex;align-items:baseline;gap:3mm}
+.flowT h2{font-size:15pt}
+.flowT span{font-size:8pt;color:var(--mute)}
+.flow{display:grid;grid-template-columns:1fr 5mm 1.12fr 5mm 1.45fr;margin:0 13mm;align-items:stretch}
+.box{background:#fff;border:.25mm solid var(--line);border-radius:2mm;padding:3mm 3.6mm}
+.box .n{font-size:6.8pt;font-weight:700;letter-spacing:.14em;color:var(--mute);text-transform:uppercase}
+.box h3{font-size:12.2pt;margin:1mm 0 1.6mm;line-height:1.15}
+.box p{font-size:7.7pt;line-height:1.42;color:#3d4450}
+.arrow{display:flex;align-items:center;justify-content:center}
+.box.core{background:var(--navy);border-color:var(--navy)}
+.box.core h3{color:#fff}.box.core p{color:#C9D3DF}.box.core .n{color:var(--saffron)}
+.src{display:flex;flex-wrap:wrap;gap:1mm;margin-top:2.2mm}
+.src span{font-size:6.2pt;background:var(--sand);border-radius:.8mm;padding:.6mm 1.5mm;color:#4a4438;font-weight:600}
+.layers{margin-top:2.4mm;display:grid;gap:.9mm}
+.layers div{font-size:6.6pt;font-weight:600;color:#fff;border:.2mm solid rgba(255,255,255,.25);border-radius:.9mm;padding:.9mm 1.8mm;display:flex;justify-content:space-between}
+.layers div em{font-style:normal;color:#9FB2C7;font-weight:400}
+.ways{display:grid;gap:2mm;padding:0;border:0;background:none}
+.way{background:#fff;border:.25mm solid var(--line);border-radius:2mm;padding:2.2mm 3.4mm;display:flex;gap:3mm;align-items:center}
+.way.fw{border:.4mm solid var(--ox);background:#FBF3EE}
+.way svg{flex:none}
+.way h3{font-size:11.4pt;line-height:1.15}
+.way p{font-size:7.4pt;line-height:1.38;color:#3d4450;margin-top:.8mm}
+.way.fw h3{color:var(--ox)}
+
+/* logos */
+.trust{position:absolute;left:0;right:0;bottom:0;padding:0 13mm 5.5mm}
+.trust .lbl{font-size:6.8pt;letter-spacing:.14em;text-transform:uppercase;color:var(--mute);font-weight:600;text-align:center;margin-bottom:2.6mm;display:flex;align-items:center;gap:4mm}
+.trust .lbl:before,.trust .lbl:after{content:"";flex:1;height:.2mm;background:var(--line)}
+.logos{display:flex;align-items:center;justify-content:space-between}
+.logos img{height:6.6mm;opacity:.72}
+.logos img.tall{height:8.6mm}
+.logos img.ox{filter:grayscale(1);height:6.4mm}
+
+/* ---------- page 2 ---------- */
+.p2head{padding:3mm 13mm 0}
+.p2head .kicker{color:var(--ox)}
+.p2head h1{font-size:24pt;line-height:1.1;margin:1.6mm 0 1.8mm;letter-spacing:-.005em}
+.p2head h1 em{font-style:normal;color:var(--ox)}
+.p2head p{font-size:9.4pt;line-height:1.5;color:#3d4450;max-width:172mm}
+
+.sec{margin:6mm 13mm 2.8mm;display:flex;align-items:center;gap:3mm}
+.sec h2{font-size:13.5pt;white-space:nowrap}
+.sec:after{content:"";flex:1;height:.2mm;background:#cfcac0}
+
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:3mm;margin:0 13mm}
+.card{background:#fff;border:.25mm solid var(--line);border-radius:2mm;overflow:hidden}
+.card .shot{height:27mm;overflow:hidden;border-bottom:.2mm solid var(--line);background:#fff}
+.card .shot img{width:100%;height:100%;object-fit:cover;object-position:top left;display:block}
+.card .shot svg{display:block;width:100%;height:100%}
+.card .t{padding:2.2mm 3mm 2.6mm}
+.card h3{font-size:11pt;line-height:1.15}
+.card p{font-size:7.2pt;line-height:1.42;color:#3d4450;margin-top:1.2mm}
+.cap{font-size:6pt;color:#8a8478;margin:1.4mm 13mm 0}
+
+.ba{display:grid;grid-template-columns:1fr 6mm 1fr;margin:0 13mm;align-items:stretch}
+.ba .col{border-radius:2mm;padding:3mm 4.2mm}
+.ba .before{background:var(--sand)}
+.ba .after{background:var(--navy);color:#fff}
+.ba .n{font-size:6.8pt;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+.ba .after .n{color:var(--saffron)}
+.ba ul{list-style:none;margin-top:2mm;display:grid;gap:1.5mm}
+.ba li{font-size:8pt;line-height:1.38;display:flex;gap:2mm}
+.ba li b{font-weight:600}
+.ba .before li:before{content:"";flex:none;width:2.2mm;height:.4mm;background:#9a9285;margin-top:1.7mm}
+.ba .after li:before{content:"";flex:none;width:1.7mm;height:1.7mm;border-radius:50%;background:#45c486;margin-top:1.05mm}
+.ba .after li{color:#DCE4EC}.ba .after li b{color:#fff}
+
+.dep{display:grid;grid-template-columns:1fr 1fr;gap:3mm;margin:0 13mm}
+.dcol{background:#fff;border:.25mm solid var(--line);border-radius:2mm;padding:2.8mm 4mm 2mm}
+.dcol.ent{border:.4mm solid var(--ox)}
+.dcol .n{font-size:6.8pt;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+.dcol.ent .n{color:var(--ox)}
+.dcol h3{font-size:12.6pt;margin:.8mm 0 1.6mm}
+.dcol table{width:100%;border-collapse:collapse}
+.dcol td{font-size:7.5pt;line-height:1.35;padding:1.15mm 0;border-top:.2mm solid var(--line);vertical-align:top}
+.dcol td:first-child{color:var(--mute);width:21mm}
+.dcol td b{font-weight:600}
+
+.steps{display:grid;grid-template-columns:repeat(4,1fr);margin:0 13mm;gap:0}
+.step{padding:0 3.5mm 0 0;position:relative}
+.step .num{font-family:Fenix,serif;font-size:19pt;color:var(--ox);line-height:1;display:flex;align-items:center;gap:2mm}
+.step .num:after{content:"";flex:1;height:.25mm;background:var(--ox);opacity:.35}
+.step:last-child .num:after{opacity:0}
+.step h3{font-size:10.6pt;margin:1.4mm 0 .9mm}
+.step p{font-size:7.3pt;line-height:1.42;color:#3d4450}
+
+.cta{position:absolute;left:0;right:0;bottom:0;height:28mm;background:linear-gradient(135deg,#2c0003 0%,var(--ox) 50%,#6a0d14 100%);color:#fff;display:flex;align-items:center;padding:0 13mm;gap:6mm}
+.cta .qr{background:var(--cream);padding:1.3mm;border-radius:1.4mm;flex:none}
+.cta .qr img{display:block;width:16mm;height:16mm}
+.cta h2{color:#FBF7F0;font-size:16.5pt;line-height:1.15}
+.cta p{font-size:8.2pt;color:#EBDDD3;margin-top:1.4mm;line-height:1.45}
+.cta .r{margin-left:auto;text-align:right;flex:none}
+.cta .r b{font-family:Fenix,serif;font-weight:400;font-size:17pt;color:#FFC98A;display:block}
+.cta .r span{font-size:7.2pt;color:#D9C5BA;display:block;margin-top:1mm;line-height:1.5}
+</style>
+</head>
+<body>
+
+<!-- ======================= PAGE 1 ======================= -->
+<section class="page">
+  <div class="top">
+    <img src="assets/iea-lockup.png" alt="India Energy Atlas">
+    <div class="tag"><b>Grid Foundation Model</b> &nbsp;|&nbsp; Enterprise overview</div>
+  </div>
+
+  <div class="hero">
+    <div class="kicker">India's first grid foundation model</div>
+    <h1>India's entire power grid,<br>in <em>one model</em> you can ask.</h1>
+    <p>Hundreds of scattered public data sources, fused into a single model of the Indian grid that updates continuously. <b>Use it online through Claude and ChatGPT, or run a private copy behind your own firewall.</b></p>
+    <div class="chips">
+      <div class="chip"><i></i>Hundreds of sources, one model</div>
+      <div class="chip"><i></i>Every place, every time-step</div>
+      <div class="chip"><i></i>Runs offline, behind your firewall</div>
+    </div>
+  </div>
+
+  <div class="heroShot frame">
+    <div class="bar"><s></s><s></s><s></s><span>energymap.in/map</span></div>
+    <div class="crop"><img src="assets/screens/map.jpg" alt="India Energy Atlas grid map"></div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><b>44,388</b><span>transmission lines mapped,<br>33 kV to 765 kV</span></div>
+    <div class="stat"><b>28,251</b><span>substations,<br>at every voltage level</span></div>
+    <div class="stat"><b>5,101</b><span>power plants,<br>across all fuel types</span></div>
+    <div class="stat"><b>15 min</b><span>resolution on market prices<br>and grid frequency</span></div>
+  </div>
+
+  <div class="flowT"><h2>How it works</h2><span>From scattered public data to a model your engineers can question</span></div>
+  <div class="flow">
+    <div class="box">
+      <div class="n">1 &nbsp;Collect</div>
+      <h3>Hundreds of data sources</h3>
+      <p>Grid operators, regulators, exchanges, utilities, weather and maps. Gathered, cleaned and reconciled for you.</p>
+      <div class="src"><span>Demand</span><span>Prices</span><span>Tariffs</span><span>Substations</span><span>Lines</span><span>Weather</span></div>
+    </div>
+    <div class="arrow"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="#400005" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="box core">
+      <div class="n">2 &nbsp;Model</div>
+      <h3>Grid Foundation Model</h3>
+      <p>Where everything is and how it behaves over time. Always refreshing.</p>
+      <div class="layers">
+        <div>Spatial <em>plants, lines, substations</em></div>
+        <div>Temporal <em>demand, prices, weather</em></div>
+        <div>Integrated <em>one consistent network</em></div>
+      </div>
+    </div>
+    <div class="arrow"><svg width="16" height="16" viewBox="0 0 16 16"><path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="#400005" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="ways">
+      <div class="way">
+        <svg width="34" height="34" viewBox="0 0 34 34"><circle cx="17" cy="17" r="16" fill="#EFEBE2"/><path d="M11 22.5h12.5a4 4 0 0 0 .6-7.95A6 6 0 0 0 12.6 13 4.8 4.8 0 0 0 11 22.5z" fill="none" stroke="#172D45" stroke-width="1.6" stroke-linejoin="round"/></svg>
+        <div><h3>3a &nbsp;Online</h3><p>Ask in plain English inside <b>Claude</b>, <b>ChatGPT</b> and other AI tools, or call the API. Free to start.</p></div>
+      </div>
+      <div class="way fw">
+        <svg width="34" height="34" viewBox="0 0 34 34"><circle cx="17" cy="17" r="16" fill="#400005"/><path d="M17 8.5l7 2.6v5.2c0 4.4-2.9 7.6-7 9.2-4.1-1.6-7-4.8-7-9.2v-5.2z" fill="none" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/><path d="M13.8 17l2.3 2.3 4.2-4.6" fill="none" stroke="#F59A33" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <div><h3>3b &nbsp;Behind your firewall</h3><p>Host a full copy on your own servers. <b>No internet needed.</b> Your data never leaves the building.</p></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="trust">
+    <div class="lbl">Trusted by teams at</div>
+    <div class="logos">
+      <img class="tall" src="assets/logos/tata-power.png" alt="Tata Power">
+      <img src="assets/logos/adani.png" alt="Adani">
+      <img class="tall" src="assets/logos/jio-bp.png" alt="Jio-bp">
+      <img class="ox" src="assets/logos/oxford.svg" alt="University of Oxford">
+      <img style="height:5.2mm" src="assets/logos/ember.png" alt="Ember">
+      <img class="tall" src="assets/logos/wartsila.png" alt="Wartsila">
+      <img src="assets/logos/kasetti.png" alt="Kasetti Technologies">
+    </div>
+  </div>
+</section>
+
+<!-- ======================= PAGE 2 ======================= -->
+<section class="page">
+  <div class="top">
+    <img src="assets/iea-lockup.png" alt="India Energy Atlas">
+    <div class="tag"><b>Grid Foundation Model</b> &nbsp;|&nbsp; For enterprises</div>
+  </div>
+
+  <div class="p2head">
+    <div class="kicker">Why it matters</div>
+    <h1>Grid studies that cost lakhs and take months.<br><em>Now a question you can ask.</em></h1>
+    <p>Most of the cost of an energy study is the hundreds of hours spent finding, cleaning and stitching data together before the first simulation runs. The Atlas model has already done that work, for the whole country.</p>
+  </div>
+
+  <div class="sec"><h2>What your team can run</h2></div>
+  <div class="cards">
+    <div class="card">
+      <div class="shot"><img src="assets/screens/card-subcap.jpg" alt=""></div>
+      <div class="t"><h3>Siting studies</h3><p>Where can a new plant or large load connect? See firm capacity by station before you commit to land.</p></div>
+    </div>
+    <div class="card">
+      <div class="shot"><img src="assets/screens/card-dcmap.jpg" alt=""></div>
+      <div class="t"><h3>Data centre impact</h3><p>Screen sites on grid, fibre, water and tariff, and test what a new campus does to the local network.</p></div>
+    </div>
+    <div class="card">
+      <div class="shot"><img src="assets/screens/card-forecast.jpg" alt=""></div>
+      <div class="t"><h3>Production cost</h3><p>Simulate how the system dispatches hour by hour, and what it means for costs, prices and emissions.</p></div>
+    </div>
+    <div class="card">
+      <div class="shot">
+        <svg viewBox="0 0 160 96" preserveAspectRatio="xMidYMid slice">
+          <rect width="160" height="96" fill="#F7F6F3"/>
+          <g stroke="#C9C3B6" stroke-width=".5"><path d="M0 24h160M0 48h160M0 72h160M40 0v96M80 0v96M120 0v96"/></g>
+          <g fill="none" stroke-linecap="round">
+            <path d="M22 66L52 30" stroke="#400005" stroke-width="2.6"/>
+            <path d="M52 30L96 22" stroke="#400005" stroke-width="2.6"/>
+            <path d="M96 22L138 44" stroke="#F59A33" stroke-width="2.6"/>
+            <path d="M52 30L84 62" stroke="#172D45" stroke-width="1.8"/>
+            <path d="M84 62L138 44" stroke="#172D45" stroke-width="1.8"/>
+            <path d="M22 66L84 62" stroke="#172D45" stroke-width="1.8"/>
+            <path d="M84 62L112 82" stroke="#0B6E3B" stroke-width="1.8"/>
+          </g>
+          <g fill="#fff" stroke="#172D45" stroke-width="1.6">
+            <circle cx="22" cy="66" r="4.2"/><circle cx="52" cy="30" r="5.2"/><circle cx="96" cy="22" r="4.2"/>
+            <circle cx="138" cy="44" r="5.2"/><circle cx="84" cy="62" r="4.2"/><circle cx="112" cy="82" r="3.6"/>
+          </g>
+          <g font-family="Inter" font-size="5.2" font-weight="600" fill="#172D45">
+            <text x="58" y="24">1.02 pu</text><text x="128" y="58">0.98 pu</text>
+            <text x="112" y="24" fill="#B66A10">94% loaded</text><text x="24" y="80">400 kV</text>
+          </g>
+        </svg>
+      </div>
+      <div class="t"><h3>AC power flow</h3><p>Check line loadings and voltages on the real network, including when a line or transformer is out.</p></div>
+    </div>
+  </div>
+  <div class="cap">Screens from the live platform at energymap.in, November 2026. Network diagram is illustrative.</div>
+
+  <div class="sec"><h2>What changes</h2></div>
+  <div class="ba">
+    <div class="col before">
+      <div class="n">The usual way</div>
+      <ul>
+        <li><span><b>Hundreds of hours</b> collecting data from scattered portals</span></li>
+        <li><span><b>Lakhs of rupees</b> for each simulation or consultant study</span></li>
+        <li><span>Sensitive project details sent to outside vendors</span></li>
+        <li><span>Results are stale by the time the report lands</span></li>
+      </ul>
+    </div>
+    <div class="arrow"><svg width="18" height="18" viewBox="0 0 16 16"><path d="M2 8h11M9 4l4 4-4 4" fill="none" stroke="#400005" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    <div class="col after">
+      <div class="n">With the Atlas model</div>
+      <ul>
+        <li><span><b>Data is already in.</b> Run study after study, in-house</span></li>
+        <li><span><b>Nothing leaves your network</b> on a private deployment</span></li>
+        <li><span><b>Always current.</b> The model keeps updating</span></li>
+        <li><span><b>Answers link back to sources</b> you can check</span></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="sec"><h2>Two ways to use it</h2></div>
+  <div class="dep">
+    <div class="dcol">
+      <div class="n">Atlas Online</div>
+      <h3>Served over the internet</h3>
+      <table>
+        <tr><td>Best for</td><td>Analysts, researchers and teams getting started</td></tr>
+        <tr><td>Access</td><td><b>Claude, ChatGPT</b>, web app and API</td></tr>
+        <tr><td>Updates</td><td>Continuous. Always the latest model</td></tr>
+        <tr><td>Setup</td><td>None. Sign up free at energymap.in</td></tr>
+      </table>
+    </div>
+    <div class="dcol ent">
+      <div class="n">Atlas Enterprise</div>
+      <h3>Your own copy, behind your firewall</h3>
+      <table>
+        <tr><td>Best for</td><td>Utilities, developers, data centre operators</td></tr>
+        <tr><td>Access</td><td>Runs on <b>your servers</b>, with your internal AI tools</td></tr>
+        <tr><td>Internet</td><td><b>Not required.</b> Works fully isolated</td></tr>
+        <tr><td>Your data</td><td>Stays inside, alongside your confidential data</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="sec"><h2>How enterprises work with us</h2></div>
+  <div class="steps">
+    <div class="step"><div class="num">1</div><h3>Try it online</h3><p>Your team asks real questions on the public model. No cost, no commitment.</p></div>
+    <div class="step"><div class="num">2</div><h3>Scope together</h3><p>We agree on the studies, regions and internal systems that matter to you.</p></div>
+    <div class="step"><div class="num">3</div><h3>Deploy privately</h3><p>A copy of the model is installed inside your network, isolated from the internet.</p></div>
+    <div class="step"><div class="num">4</div><h3>Run your studies</h3><p>Your engineers run siting, cost and power flow work in-house, on demand.</p></div>
+  </div>
+
+  <div class="cta">
+    <div class="qr"><img src="assets/qr.png" alt="energymap.in"></div>
+    <div>
+      <h2>See India's grid model, live.</h2>
+      <p>Scan to explore the map and ask your first question.<br>For a private deployment, talk to the India Energy Atlas team.</p>
+    </div>
+    <div class="r"><b>energymap.in</b><span>India Energy Atlas<br>Grid analytics and AI for India's power sector</span></div>
+  </div>
+</section>
+</body>
+</html>
